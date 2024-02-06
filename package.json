@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "author": "yi.wang <yi.wang@baishan.com>",
+  "scripts": {
+    "dev": "umi dev",
+    "build": "umi build",
+    "postinstall": "umi setup",
+    "setup": "umi setup",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.2.6",
+    "umi": "^4.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "antd": "^5.13.3",
+    "classnames": "^2.5.1",
+    "dayjs": "^1.11.10",
+    "iztro": "^2.2.3",
+    "iztro-hook": "^1.2.11",
+    "typescript": "^5.0.3"
+  }
+}
