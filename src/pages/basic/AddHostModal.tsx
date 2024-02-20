@@ -70,7 +70,7 @@ const AddHostModal = (props: { visible: any; hide: any; submit: any }) => {
 
   return (
     <Modal
-      title="添加"
+      title="添加命主"
       open={visible}
       onCancel={hide}
       footer={null}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Dropdown, Modal } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
 import { useIztro } from 'iztro-hook'
@@ -7,16 +7,21 @@ import './index.less'
 import AddHostModal from './basic/AddHostModal';
 import Analyze from './analyze'
 
+interface HOST {
+  birthday: string
+  birthdayType: string
+  birthTime: number
+  gender: string
+  fixLeap: boolean
+  name?: string
+}
+
 const DocsPage = () => {
-  const [hostList, setHostList] = useState([{
-    birthday: '1991-8-16',
-    birthdayType: 'solar',
-    birthTime: 2,
-    gender: 'female',
-    fixLeap: true,
-  }])
-  const [selectedHost, setSelectedHost] = useState({})
-  const [showHostModal, setHostModal] = useState(false)
+  const localstorage = localStorage.getItem('astrolabes') ? JSON.parse(localStorage.getItem('astrolabes')) : []
+  const [hostList, setHostList] = useState<HOST[]>(localstorage)
+  const [selectedHost, setSelectedHost] = useState<HOST>({})
+  const [selectedIdx, setSelectedIdx] = useState<number | undefined>(undefined)
+  const [showHostModal, setHostModal] = useState<boolean>(false)
   const { astrolabe, horoscope, setHoroscope } = useIztro({
     birthday: selectedHost.birthday ?? '',
     birthdayType: selectedHost.birthdayType ?? '',
@@ -25,8 +30,13 @@ const DocsPage = () => {
     fixLeap: selectedHost.fixLeap ?? false,
   });
 
-  const handleSelectHost = (host: any) => {
+  useEffect(() => {
+    localStorage.setItem('astrolabes', JSON.stringify(hostList))
+  }, [hostList])
+
+  const handleSelectHost = (host: any, idx: number) => {
     setSelectedHost({ ...host })
+    setSelectedIdx(idx)
   }
 
   const handleAddHost = () => {
@@ -37,7 +47,7 @@ const DocsPage = () => {
     setHostModal(false)
   }
 
-  const handleAddHostSubmit = (record) => {
+  const handleAddHostSubmit = (record: HOST) => {
     setHostList([
       record,
       ...hostList,
@@ -45,7 +55,7 @@ const DocsPage = () => {
     handleHideModal()
   }
 
-  const handleDeleteHost = (idx) => {
+  const handleDeleteHost = (idx: number) => {
     const result = hostList.filter((host, index) => index !== idx)
     setHostList(result)
     setSelectedHost(result[0] ?? {})
@@ -54,23 +64,28 @@ const DocsPage = () => {
   return (
     <div className='container'>
       <div className='header'>
-        <span>XXXXX</span>
+        <span>紫微斗数简易排盘及分析工具</span>
         <div>
         </div>
       </div>
       <div className='content'>
-        <ul className='left'>
-          <li className='host-item button' onClick={handleAddHost}>添加</li>
-          {hostList.map((host, idx) => (
-            <li
-              key={host.birthday}
-              className='host-item'
-            >
-              <span className='hostLabel' onClick={() => handleSelectHost(host)}>{host.name ?? ''} {host.birthday} {host.general === 'male' ? '男' : '女'}</span>
-              <span className='deleteBtn' onClick={() => handleDeleteHost(idx)}><DeleteOutlined /></span>
-            </li>
-          ))}
-        </ul>
+        <div className='left'>
+          <ul>
+            <li className='host-item button' onClick={handleAddHost}>添加命主</li>
+            {hostList.map((host, idx) => (
+              <li
+                key={host.birthday}
+                className={`host-item ${selectedIdx !== idx ? '' : 'host-item-selected'}`}
+              >
+                <span className='hostLabel' onClick={() => handleSelectHost(host, idx)}>{host.name || '匿名'} {host.birthday}{host.birthdayType === 'solar' ? '(阳)' : '(阴)'} {host.gender === 'male' ? '男' : '女'}</span>
+                <span className='deleteBtn' onClick={() => handleDeleteHost(idx)}><DeleteOutlined /></span>
+              </li>
+            ))}
+          </ul>
+          <div className='wx-info'>
+            <span>欢迎指教, 微信: wvvw_vwwv</span>
+          </div>
+        </div>
         <div className='right'>
           <div className='iztro'>
             <div className='izplace'>
@@ -90,7 +105,9 @@ const DocsPage = () => {
               />
             </div>
           </div>
-          <div className='copyright'></div>
+          <div className='copyright'>
+            <a target='_blank' href="https://beian.miit.gov.cn/#/Integrated/index">京ICP备2024042874号</a>
+          </div>
         </div>
       </div>
       <AddHostModal

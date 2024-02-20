@@ -100,13 +100,12 @@ const IztroMain = (props: any) => {
   }, [horoscopeDate, horoscopeHour])
 
   if (!birthday) {
-    return <p>请选择或新建</p>
+    return <p className='please-select'>请选择一个命主</p>
   }
 
   return (
     <div className={classNames("iztro-astrolabe", "iztro-astrolabe-theme-default")}>
       {astrolabe?.palaces.map((palace, idx) => {
-        if (idx !== 0) return null
         return (
           <Izpalace
             key={palace.earthlyBranch}
