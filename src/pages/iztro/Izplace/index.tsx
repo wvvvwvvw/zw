@@ -22,6 +22,7 @@ export const Izpalace = ({
   showDailyScope = false,
   showHourlyScope = false,
   toggleScope,
+  isPhoneDevice,
   ...palace
 }: IzpalaceProps) => {
   const horoscopeNames = useMemo<HoroscopeForPalace[]>(() => {
@@ -231,9 +232,9 @@ export const Izpalace = ({
         </div>
         <div>
           <div className={classNames("iztro-palace-scope")}>
-            <div className={classNames("iztro-palace-scope-age")}>
+            {!isPhoneDevice && <div className={classNames("iztro-palace-scope-age")}>
               {palace.ages.join(" ")}
-            </div>
+            </div>}
             <div className={classNames("iztro-palace-scope-decadal")}>
               {palace.decadal.range.join(" - ")}
             </div>

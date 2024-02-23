@@ -1,5 +1,6 @@
 import { useIztro } from 'iztro-hook'
 import React, { useState, useMemo } from 'react'
+import { RiseOutlined } from '@ant-design/icons'
 import { useEffect } from 'react';
 import classNames from 'classnames'
 import { Scope } from "iztro/lib/data/types";
@@ -11,7 +12,7 @@ import './theme.css'
 import './Iztro.css'
 
 const IztroMain = (props: any) => {
-  const { birthday, birthTime, astrolabe, horoscope, setHoroscope } = props
+  const { birthday, astrolabe, horoscope, setHoroscope, isPhoneDevice } = props
   const [activeHeavenlyStem, setActiveHeavenlyStem] = useState();
   const [hoverHeavenlyStem, setHoverHeavenlyStem] = useState();
   const [focusedIndex, setFocusedIndex] = useState<number>();
@@ -100,7 +101,7 @@ const IztroMain = (props: any) => {
   }, [horoscopeDate, horoscopeHour])
 
   if (!birthday) {
-    return <p className='please-select'>请选择一个命主</p>
+    return isPhoneDevice ? <p className='please-select please-select-pc'>点击上方按钮选择命主 <RiseOutlined /></p> : <p className='please-select'>请选择一个命主</p>
   }
 
   return (
@@ -122,6 +123,7 @@ const IztroMain = (props: any) => {
             toggleActiveHeavenlyStem={toggleActiveHeavenlyStem}
             hoverHeavenlyStem={hoverHeavenlyStem}
             setHoverHeavenlyStem={setHoverHeavenlyStem}
+            isPhoneDevice={isPhoneDevice}
             {...palace}
           />
         );
@@ -133,6 +135,7 @@ const IztroMain = (props: any) => {
         horoscopeHour={horoscopeHour}
         setHoroscopeDate={setHoroscopeDate}
         setHoroscopeHour={setHoroscopeHour}
+        isPhoneDevice={isPhoneDevice}
         {...dynamic}
       />
     </div>

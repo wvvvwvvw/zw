@@ -8,6 +8,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  position: relative;
 
   .header {
     height: 50px;
@@ -18,6 +19,9 @@ body {
     align-items: center;
     background-color: #000;
     color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 999;
   }
 
   .content {
@@ -26,68 +30,7 @@ body {
     flex-direction: row;
     justify-content: flex-start;
 
-    .left {
-      width: 240px;
-      background-color: #f8a506;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-
-      ul {
-        padding: 0;
-        margin: 0;
-      }
-
-      .host-item {
-        list-style: none;
-        height: 40px;
-        line-height: 40px;
-        font-size: 16px;
-        padding: 0 10px;
-        margin: 0;
-        border-bottom: 1px solid #EE9A49;
-        cursor: pointer;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-
-        .hostLabel {
-          flex: 1;
-        }
-
-        .deleteBtn {
-          display: none;
-        }
-
-        &:hover {
-          .deleteBtn {
-            display: block;
-          }
-        }
-      }
-
-      .host-item-selected {
-        background-color: #fff;
-      }
-
-      .button {
-        display: block;
-        text-align: center;
-      }
-
-      .wx-info {
-        padding-bottom: 10px;
-        text-align: center;
-
-        span {
-          display: block;
-          margin-top: 10px;
-        }
-      }
-    }
+    
 
     .right {
       flex: 1;
@@ -95,52 +38,180 @@ body {
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      max-height: calc(100vh - 51px);
+      max-height: calc(100vh - 50px);
 
-      .iztro {
-        width: 100%;
-        flex: 1;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        max-height: calc(100vh - 91px);
-        
-        .izplace {
-          flex: 3;
-          background-color: #fff;
+      
+    }
+  }
+}
 
-          .please-select {
-            line-height: 50px;
-            text-indent: 30px;
-            font-size: 18px;
-          }
-        }
+.left {
+  width: 240px;
+  height: 100%;
+  background-color: #f8a506;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid #e5e5e5;
 
-        .izanalyst {
-          max-height: calc(100vh - 91px);
-          overflow-y: scroll;
-          flex: 2;
-          background: #fafafa;
-          padding: 15px;
-          border-left: 1px solid #e5e5e5;
-        }
-      }
+  ul {
+    padding: 0;
+    margin: 0;
+  }
 
-      .copyright {
-        width: 100%;
-        height: 40px;
-        line-height: 40px;
-        text-align: center;
-        background-color: #000;
-        font-size: 13px;
-        a {
-          text-decoration: none;
-          color: #fff;
-        }
-        
+  .host-item {
+    list-style: none;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    padding: 0 10px;
+    margin: 0;
+    border-bottom: 1px solid #EE9A49;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .hostLabel {
+      flex: 1;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+  }
+
+  .pc-host-item {
+    .deleteBtn {
+      display: none;
+    }
+  
+    &:hover {
+      .deleteBtn {
+        display: block;
       }
     }
   }
+
+  .host-item-selected {
+    background-color: #f8f8f8;
+  }
+
+  .button {
+    display: block;
+    text-align: center;
+  }
+
+  .wx-info {
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 14px;
+
+    span {
+      display: block;
+      margin-top: 10px;
+    }
+  }
+}
+
+.phone-left {
+  background: #fff;
+
+  .host-item {
+    border-bottom: 1px solid #f5f5f5;
+  }
+}
+
+.delete-host-modal {
+  span {
+    display: block;
+  }
+
+  .ml30 {
+    margin-left: 30px;
+  }
+
+  .red {
+    color: brown;
+    margin: 10px 0 10px 15px;
+  }
+
+}
+
+.iztro {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  // max-height: calc(100vh - 91px);
+
+  .izplace {
+    flex: 3;
+    background-color: #fff;
+
+    .please-select {
+      line-height: 50px;
+      text-indent: 30px;
+      font-size: 18px;
+    }
+
+    .please-select-pc {
+      line-height: 30px;
+      text-align: right;
+      padding-right: 40px;
+      font-size: 18px;
+    }
+  }
+
+  .izanalyst {
+    // max-height: calc(100vh - 91px);
+    overflow-y: scroll;
+    flex: 2;
+    background: #fafafa;
+  }
+}
+
+.iztro-pc {
+  max-height: calc(100vh - 91px);
+
+  .izanalyst {
+    max-height: calc(100vh - 91px);
+  }
+}
+
+.pc-left {
+  min-height: calc(100vh - 50px);
+}
+
+.copyright {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background-color: #000;
+  font-size: 13px;
+
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
+}
+
+div[class*="ant-drawer-body"] {
+  padding: 0!important;
+}
+
+div[class*="ant-drawer-header"] {
+  padding: 13px!important;
+}
+
+div[class*="ant-drawer-header-title"] {
+  padding: 0!important;
 }
 
 .rowEnd {

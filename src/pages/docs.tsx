@@ -8,14 +8,12 @@ const DocsPage = () => {
     birthdayType: 'solar',
     birthTime: 2,
     gender: 'female',
-    fixLeap: true,
   }])
   const [selectedHost, setSelectedHost] = useState({
     birthday: '',
     birthdayType: 'solar',
     birthTime: 2,
     gender: 'female',
-    fixLeap: false,
   })
 
   const handleSelectHost = (host: any) => {

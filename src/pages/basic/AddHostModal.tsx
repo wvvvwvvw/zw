@@ -134,21 +134,6 @@ const AddHostModal = (props: { visible: any; hide: any; submit: any }) => {
             <Select.Option value="female">女</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item
-          label="是否闰月"
-          name="fixLeap"
-          initialValue={false}
-          required
-        >
-          <Switch />
-        </Form.Item>
-        <Form.Item
-          label="备注"
-          name="desctiption"
-          initialValue=""
-        >
-          <Input.TextArea rows={2} placeholder="请输入备注信息" />
-        </Form.Item>
         <div className="rowEnd">
           <Button onClick={hide}>
             取消

@@ -6,6 +6,14 @@ export default defineConfig({
     { path: "/docs", component: "docs" },
   ],
   npmClient: 'yarn',
-  base: '/zw/',
-  publicPath: '/zw/'
+  copy: [{
+    from: 'src/public',
+    to: 'dist'
+  }],
+  title: '紫微斗数',
+  links: [{
+    rel: 'icon', href: 'www.ico',
+  }]
+  // base: '/zw/',
+  // publicPath: '/zw/'
 });

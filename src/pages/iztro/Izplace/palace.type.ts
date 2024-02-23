@@ -18,6 +18,7 @@ export type IzpalaceProps = {
   toggleActiveHeavenlyStem?: (heavenlyStem: HeavenlyStemKey) => void;
   toggleScope?: (scope: Scope) => void;
   onFocused?: (index?: number) => void;
+  isPhoneDevice: boolean;
 } & IFunctionalPalace;
 
 export type HoroscopeForPalace = {

@@ -24,6 +24,7 @@ type IzpalaceCenterProps = {
     React.SetStateAction<string | Date | undefined>
   >;
   setHoroscopeHour?: React.Dispatch<React.SetStateAction<number | undefined>>;
+  isPhoneDevice: boolean
 };
 
 export const IzpalaceCenter = ({
@@ -35,6 +36,7 @@ export const IzpalaceCenter = ({
   horoscopeHour = 0,
   setHoroscopeDate,
   setHoroscopeHour,
+  isPhoneDevice,
 }: IzpalaceCenterProps) => {
   // console.log(horoscope)
   const records: ItemProps[] = useMemo(
@@ -217,94 +219,96 @@ export const IzpalaceCenter = ({
           <Item key={idx} {...rec} />
         ))}
       </ul>
-      <h3 className="center-title">运限信息</h3>
-      <ul className="basic-info">
-        <Item title="农历：" content={horoDate.lunar} />
-        <div className="solar-horoscope">
-          <Item title="阳历：" content={horoDate.solar} />
+      {!isPhoneDevice && <>
+        <h3 className="center-title">运限信息</h3>
+        <ul className="basic-info">
+          <Item title="农历：" content={horoDate.lunar} />
+          <div className="solar-horoscope">
+            <Item title="阳历：" content={horoDate.solar} />
+            <span
+              className="today"
+              onClick={() => setHoroscopeDate?.(new Date())}
+            >
+              今
+            </span>
+          </div>
+        </ul>
+        <div className="horo-buttons">
           <span
-            className="today"
-            onClick={() => setHoroscopeDate?.(new Date())}
+            className={classNames("center-button", {
+              disabled: shouldBeDisabled(horoDate.solar, "yearly", -10),
+            })}
+            onClick={() => onHoroscopeButtonClicked("yearly", -10)}
           >
-            今
+            ◀限
+          </span>
+          <span
+            className={classNames("center-button", {
+              disabled: shouldBeDisabled(horoDate.solar, "yearly", -1),
+            })}
+            onClick={() => onHoroscopeButtonClicked("yearly", -1)}
+          >
+            ◀年
+          </span>
+          <span
+            className={classNames("center-button", {
+              disabled: shouldBeDisabled(horoDate.solar, "monthly", -1),
+            })}
+            onClick={() => onHoroscopeButtonClicked("monthly", -1)}
+          >
+            ◀月
+          </span>
+          <span
+            className={classNames("center-button", {
+              disabled: shouldBeDisabled(horoDate.solar, "daily", -1),
+            })}
+            onClick={() => onHoroscopeButtonClicked("daily", -1)}
+          >
+            ◀日
+          </span>
+          <span
+            className={classNames("center-button", {
+              disabled: shouldBeDisabled(horoDate.solar, "hourly", -1),
+            })}
+            onClick={() => onHoroscopeButtonClicked("hourly", -1)}
+          >
+            ◀时
+          </span>
+          <span className="center-horo-hour">
+            {t(CHINESE_TIME[horoscopeHour])}
+          </span>
+          <span
+            className="center-button"
+            onClick={() => onHoroscopeButtonClicked("hourly", 1)}
+          >
+            时▶
+          </span>
+          <span
+            className="center-button"
+            onClick={() => onHoroscopeButtonClicked("daily", 1)}
+          >
+            日▶
+          </span>
+          <span
+            className="center-button"
+            onClick={() => onHoroscopeButtonClicked("monthly", 1)}
+          >
+            月▶
+          </span>
+          <span
+            className="center-button"
+            onClick={() => onHoroscopeButtonClicked("yearly", 1)}
+          >
+            年▶
+          </span>
+          <span
+            className="center-button"
+            onClick={() => onHoroscopeButtonClicked("yearly", 10)}
+          >
+            限▶
           </span>
         </div>
-      </ul>
-      <div className="horo-buttons">
-        <span
-          className={classNames("center-button", {
-            disabled: shouldBeDisabled(horoDate.solar, "yearly", -10),
-          })}
-          onClick={() => onHoroscopeButtonClicked("yearly", -10)}
-        >
-          ◀限
-        </span>
-        <span
-          className={classNames("center-button", {
-            disabled: shouldBeDisabled(horoDate.solar, "yearly", -1),
-          })}
-          onClick={() => onHoroscopeButtonClicked("yearly", -1)}
-        >
-          ◀年
-        </span>
-        <span
-          className={classNames("center-button", {
-            disabled: shouldBeDisabled(horoDate.solar, "monthly", -1),
-          })}
-          onClick={() => onHoroscopeButtonClicked("monthly", -1)}
-        >
-          ◀月
-        </span>
-        <span
-          className={classNames("center-button", {
-            disabled: shouldBeDisabled(horoDate.solar, "daily", -1),
-          })}
-          onClick={() => onHoroscopeButtonClicked("daily", -1)}
-        >
-          ◀日
-        </span>
-        <span
-          className={classNames("center-button", {
-            disabled: shouldBeDisabled(horoDate.solar, "hourly", -1),
-          })}
-          onClick={() => onHoroscopeButtonClicked("hourly", -1)}
-        >
-          ◀时
-        </span>
-        <span className="center-horo-hour">
-          {t(CHINESE_TIME[horoscopeHour])}
-        </span>
-        <span
-          className="center-button"
-          onClick={() => onHoroscopeButtonClicked("hourly", 1)}
-        >
-          时▶
-        </span>
-        <span
-          className="center-button"
-          onClick={() => onHoroscopeButtonClicked("daily", 1)}
-        >
-          日▶
-        </span>
-        <span
-          className="center-button"
-          onClick={() => onHoroscopeButtonClicked("monthly", 1)}
-        >
-          月▶
-        </span>
-        <span
-          className="center-button"
-          onClick={() => onHoroscopeButtonClicked("yearly", 1)}
-        >
-          年▶
-        </span>
-        <span
-          className="center-button"
-          onClick={() => onHoroscopeButtonClicked("yearly", 10)}
-        >
-          限▶
-        </span>
-      </div>
+      </>}
       <a
         className="iztro-copyright"
         href="https://github.com/sylarlong/iztro"
